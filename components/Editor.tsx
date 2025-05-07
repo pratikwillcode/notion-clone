@@ -9,12 +9,12 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { BlockNoteView } from "@blocknote/shadcn";
 import { BlockNoteEditor } from "@blocknote/core";
 import { useCreateBlockNote } from "@blocknote/react";
-import "@blocknote/core/fonts/inter.css"
-import "@blocknote/shadcn/style.css"
+import "@blocknote/core/fonts/inter.css";
+import "@blocknote/shadcn/style.css";
 
 type EditorProps={
   doc: Y.Doc;
-  provider:any;
+  provider:LiveblocksYjsProvider;
   darkMode: boolean
 }
 import React from 'react'

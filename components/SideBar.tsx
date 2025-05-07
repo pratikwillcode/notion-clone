@@ -5,13 +5,12 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useUser } from "@clerk/nextjs";
-import { collection, collectionGroup, DocumentData, query, where } from "firebase/firestore";
+import {  collectionGroup, DocumentData, query, where } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useEffect, useState } from "react";
 import SidebarOption from "./SidebarOption";
@@ -36,7 +35,7 @@ function SideBar() {
       editor: []
     }
   )
-  const [data, loading, error] = useCollection(
+  const [data] = useCollection(
     user &&
     query(collectionGroup(db, 'rooms'), where('userId', '==', user.emailAddresses[0].toString())
     )

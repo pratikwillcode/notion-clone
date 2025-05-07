@@ -3,17 +3,14 @@
 import * as Y from "yjs";
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "./ui/input"
 import { Button } from "./ui/button"
-import { FormEvent, startTransition, useState, useTransition } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import {
     Select,
     SelectContent,
@@ -22,7 +19,6 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import { BotIcon, LanguagesIcon } from "lucide-react";
-import { headers } from "next/headers";
 import { toast } from "sonner";
 import Markdown from "react-markdown"
   
@@ -60,35 +56,30 @@ function TranslateDocument({doc}:{
     const [isOpen, setIsOpen] = useState(false)
     const [language, setLanguage] = useState<string>("");
     const [summary, setSummary] = useState("")
-    const [question, setQuestion] = useState("")
+    const [question, ] = useState("")
     const [isPending, startTransition] =useTransition();
-
-
-// These are actual classes, used for instanceof checks
-    const XmlElement = Y.XmlElement;
-    const XmlFragment = Y.XmlFragment;
-    const XmlText = Y.XmlText;
-
 
     const handleAskQuestion = async (e:FormEvent)=>{
         e.preventDefault()
         startTransition(async()=>{
             // const documentData = doc.get("document-store").toJSON()
             //chatgpt code
-            function extractText(node: any): string {
-                if (
-                    node instanceof Y.XmlElement ||
-                    node instanceof Y.XmlFragment
-                ) {
-                    return node.toArray()
-                        .map((child: any) => extractText(child))
-                        .join("\n");
+            function extractText(
+                node: Y.XmlElement | Y.XmlFragment | Y.XmlText
+              ): string {
+                if (node instanceof Y.XmlElement || node instanceof Y.XmlFragment) {
+                  return node
+                    .toArray()
+                    .map((child) =>
+                      extractText(child as Y.XmlElement | Y.XmlFragment | Y.XmlText)
+                    )
+                    .join("\n");
                 } else if (node instanceof Y.XmlText) {
-                    return node.toString();
+                  return node.toString();
                 }
-                return '';
-            }
-            
+                return "";
+              }
+
             const yXmlFragment = doc.getXmlFragment("document-store");
             const plainText = extractText(yXmlFragment).trim();
             

@@ -2,7 +2,6 @@
 
 import {
     LiveblocksProvider,
-    RoomProvider,
   } from "@liveblocks/react/suspense";
 function LiveBlocksProvider({children}:{
     children: React.ReactNode

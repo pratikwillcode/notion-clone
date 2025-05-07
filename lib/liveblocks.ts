@@ -1,5 +1,4 @@
 import {Liveblocks} from "@liveblocks/node"
-import { error } from "console"
 
 const key = process.env.LIVEBLOCK_PRIVATE_KEY
 
